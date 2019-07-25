@@ -14,7 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+from django.conf.urls import url
+
+# from . import views
 
 
 from django.conf import settings
@@ -30,7 +33,8 @@ urlpatterns = [
     path('shop/', views.shop, name='shop'),
     path('single-view/<int:product_id>/', views.single_view, name='single_view'), # each name should be uniqe and defines what view to render and what parameters to pass
     path('create-product/', views.create_product, name='create_product'), # each name should be uniqe and defines what view to render and what parameters to pass
-    
+    url(r'^category/(?P<hierarchy>.+)/$', views.show_category, name='category'),
+
 ]
 
 # Static

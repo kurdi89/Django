@@ -2,9 +2,10 @@
 
 
 {% block content %}
-    <form method="POST" action="{% url 'media' %}"  enctype="multipart/form-data">
+    {% comment %} action="{% url 'media' %}" {% endcomment %}
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ create_form.as_p }}
-        <input type="submit" value="Add Book">
+        <input type="submit" value="Add a product">
     </form>
 {% endblock content %}

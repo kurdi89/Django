@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block content %}
+<br>
+{% if sub_categories %}
+    <h3>Sub Categories</h3>
+    {% for i in sub_categories %}
+        <a href="{{ i.slug }}"> {{ i.name }} </a>
+    {% endfor %}
+{% endif %}
+
+<div class="row small-up-1 medium-up-3" >
+{% if product_set %}
+    {% for i in product_set %}
+        <div class="columns">
+            <div class=" card-article-hover card">
+            <a href="{{ i.slug }}">
+                <img  src="{{ i.thumbnail_link }}" width="100">
+            </a>
+            <div class="card-section">
+                <a href="{{ i.slug }}">
+                    <h6 class="article-title">{{ i.title | truncatechars:30}}</h6>
+                </a>
+                <a href="{% url 'single_view' i.id %}">
+                    <h2 class="article-title">{{ i.title | truncatechars:30}}</h2>
+                </a>
+            </div>
+            <div class="card-divider flex-container align-middle">
+                {{i.regular_price}}
+            </div>
+            <div class="hover-border">
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+There are no products in this category, yet
+
+{% endif %}
+
+</div>
+{% endblock %}
