@@ -6,128 +6,360 @@
 {% block content %}
 
 
-    {{  content  }} <br>
+    <div class="shop">
+		<div class="container">
+			<div class="row">
 
-    the list of products in the database : <br> 
-    Grid : <br> 
-    {%  for product in products_list  %}
-        <a href="{% url 'single_view' product.id %}">
-            <img src="{{product.thumbnail_link}}"  width="100">
-        </a>
-        <a href="{% url 'single_view' product.id %}">
-            <h3>{{product.title}}: </h3>
-        </a>
+                <!-- side starts-->   
 
-        {{product.summary|truncatechars:120}} <br>
-        category : {{product.category}} <br>
-        regular_price : {{product.regular_price}} <br>
-        {% if product.discount_price != None %}
-        discount_price : {{product.discount_price}} <br>
-        {{product.discount_until|timeuntil}} left for this discount <br>
-        {% endif %}
-        items left : {{product.inventory}} <br>
-        {% if product.free_shipping == True %}
-            Free Shipping Product
-        {% endif %} <br>
+				<div class="col-lg-3 d-none">
 
-        
-        {% for i in i|rjust:product.rating %}
-        ⭐
-        {% endfor %}
-            {% comment %} {{ forloop.counter }}
-            {% ifequal i product.rating %}
-            *
-            {% endifequal %}
-            {% ifnotequal i product.rating %}
-            #
-            {% endifnotequal %} {% endcomment %}
-        {% comment %} {{product.created_at}} <br> {% endcomment %}
-        {% comment %} {{product.author}} <br> {% endcomment %}
-        
-    {%  endfor  %}
-    <hr>
-    List : <br>
-    {%  for product in products_list  %}
-        <a href="{% url 'single_view' product.id %}">
-            <img src="{{product.thumbnail_link}}"  width="100">
-        </a>
-        <a href="{% url 'single_view' product.id %}">
-            <h3>{{product.title}}: </h3>
-        </a>
+					<!-- Shop Sidebar -->
+					<div class="shop_sidebar">
+						<div class="sidebar_section">
+							<div class="sidebar_title">الاقسام الفرعية</div>
+							<ul class="sidebar_categories">
+                                {%  for category in categories %}
+                                    {% if category.parent != None %}
+                                        <li>
+                                            <a href="/category/{{ category.parent|lower }}/{{ category.slug|lower }}">{{ category.parent  }} / {{ category.name }}</a>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {{ category.summary|truncatechars:80 }} <br>
+                                {%  endfor  %}
+							</ul>
+						</div>
+						{% comment %} <div class="sidebar_section filter_by_section">
+							<div class="sidebar_title">Filter By</div>
+							<div class="sidebar_subtitle">Price</div>
+							<div class="filter_price">
+								<div id="slider-range" class="slider_range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"><div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 58%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 58%;"></span></div>
+								<p>Range: </p>
+								<p><input type="text" id="amount" class="amount" readonly="" style="border:0; font-weight:bold;"></p>
+							</div>
+						</div> {% endcomment %}
+						{% comment %} <div class="sidebar_section">
+							<div class="sidebar_subtitle color_subtitle">Color</div>
+							<ul class="colors_list">
+								<li class="color"><a href="#" style="background: #b19c83;"></a></li>
+								<li class="color"><a href="#" style="background: #000000;"></a></li>
+								<li class="color"><a href="#" style="background: #999999;"></a></li>
+								<li class="color"><a href="#" style="background: #0e8ce4;"></a></li>
+								<li class="color"><a href="#" style="background: #df3b3b;"></a></li>
+								<li class="color"><a href="#" style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
+							</ul>
+						</div> {% endcomment %}
+						{% comment %} <div class="sidebar_section">
+							<div class="sidebar_subtitle brands_subtitle">Brands</div>
+							<ul class="brands_list">
+								<li class="brand"><a href="#">Apple</a></li>
+								<li class="brand"><a href="#">Beoplay</a></li>
+								<li class="brand"><a href="#">Google</a></li>
+								<li class="brand"><a href="#">Meizu</a></li>
+								<li class="brand"><a href="#">OnePlus</a></li>
+								<li class="brand"><a href="#">Samsung</a></li>
+								<li class="brand"><a href="#">Sony</a></li>
+								<li class="brand"><a href="#">Xiaomi</a></li>
+							</ul>
+						</div> {% endcomment %}
+					</div>
 
-        {{product.summary}} <br>
-        category : {{product.category}} <br>
-        regular_price : {{product.regular_price}} <br>
-        {% if product.discount_price != None %}
-        discount_price : {{product.discount_price}} <br>
-        {{product.discount_until|timeuntil}} left for this discount <br>
-        {% endif %}
+				</div>
 
-        {% if product.discount_price != None %}
-            you will save : {{product.regular_price|sub:product.discount_price}} <br>
-        {% endif %}
-
-        items left : {{product.inventory}} <br>
-        {% if product.free_shipping == True %}
-            Free Shipping Product
-        {% endif %} <br>
-
-        
-        {% for i in i|rjust:product.rating %}
-        ⭐
-        {% endfor %}
-            {% comment %} {{ forloop.counter }}
-            {% ifequal i product.rating %}
-            *
-            {% endifequal %}
-            {% ifnotequal i product.rating %}
-            #
-            {% endifnotequal %} {% endcomment %}
-        {% comment %} {{product.created_at}} <br> {% endcomment %}
-        {% comment %} {{product.author}} <br> {% endcomment %}
-        
-    {%  endfor  %}
-    <hr>
-    Featured list : 
-    {%  for product in featured_list  %}
-        <a href="{% url 'single_view' product.id %}">
-            <img src="{{product.thumbnail_link}}"  width="100">
-        </a>
-        <a href="{% url 'single_view' product.id %}">
-            <h3>{{product.title}}: </h3>
-        </a>
-
-        {{product.summary|truncatechars:80}} <br>
-        {% comment %} {{product.author}} <br> {% endcomment %}
-        
-    {%  endfor  %}
-    <hr>
-    parent categories : 
-
-    {%  for category in categories %}
-        {% if category.parent == None %}
-            <a href="/category/{{ category.slug }}">{{ category.name }}</a>
-                {% if category.thumbnail %}
-                    <img src="{{category.thumbnail.url}}"  width="100">
-                {% endif %}
-            </a>
-        {% endif %}
-    {%  endfor  %}
-    <hr>
-    sub categories category list : 
-    {%  for category in categories %}
-        {% if category.parent != None %}
-            <a href="/category/{{ category.slug }}">{{ category.parent  }} / {{ category.name }}</a>
-            </a>
-        {% endif %}
-        {{ category.summary|truncatechars:80 }} <br>
-    {%  endfor  %}
+                <!-- side ends-->
 
 
+				<div class="col-lg-9">
+					
+					<!-- Shop Content -->
+                    
+                    
 
-    <a href="{% url 'create_product' %}"> <h2>Add a product</h2> </a>
+
+					<div class="shop_content">
+						<div class="shop_bar clearfix">
+							{% comment %} <div class="shop_product_count"><span>186</span> products found</div> {% endcomment %}
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-grid-tab" data-toggle="pill" href="#pills-grid" role="tab" aria-controls="pills-grid" aria-selected="true"><img src="/static/images/grid-1.svg" width="25" alt="Grid"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-List-tab" data-toggle="pill" href="#pills-List" role="tab" aria-controls="pills-List" aria-selected="false"><img src="/static/images/list-1.svg" width="25" alt="List"></a>
+                                </li>
+                            </ul>
+							<div class="shop_sorting">
+							</div>
+						</div>
+
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab"> 
+                                <!--start : Grid-->                     
+                                <div class="product_grid" style="position: relative; height: 1012px;">
+                                    <div class="product_grid_border"></div>
+
+                                    {%  for product in products_list  %}
+                                    
+                                    <!-- Product Item -->
+                                    <div class="product_item {% if product.discount_price != None %} discount {% else %} is_new {% endif %}" style="position: absolute; left: 0px; top: 0px;">
+                                        <div class="product_border"></div>
+                                        <!--link-->
+                                        <a href="{% url 'single_view' product.id %}">
+                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                <img src="{{product.thumbnail_link}}"  width="100"  alt="{{product.title}}">
+                                                
+                                            </div>
+                                        </a>
+                                        <a href="{% url 'single_view' product.id %}">
+                                            <h3></h3>
+                                            <div class="product_content">
+                                                {% if product.discount_price != None %}
+                                                    <div class="product_price text-success text-rtl"> {{product.discount_price}}  ر.س <br>
+                                                        <span class="text-danger text-rtl"> {{product.regular_price}}  ر.س </span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="product_price text-rtl">{{product.regular_price}}  ر.س </div>
+                                                {% endif %}
+                                                <div class="product_name"><div><a href="#" tabindex="0">{{product.title}}</a></div></div>
+                                                {% for i in i|rjust:product.rating %}
+                                                    <img src="/static/images/star.svg" width="15" alt="⭐">
+                                                {% endfor %}  
+                                                <p class="mb-0"><small>{{product.summary|truncatechars:60}}</small></p>
+                                                {% if product.discount_price != None %}
+                                                    ⌚ {{product.discount_until|timeuntil}}<br>
+                                                {% endif %}
+                                                
+                                            </div>
+                                        </a>
+                                        <!--link-->
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <ul class="product_marks">
+                                            <li class="product_mark product_discount">
+                                                {% if product.discount_price != None %}
+                                                    {{product.regular_price|sub:product.discount_price}} وفر
+                                                {% endif %}
+                                            </li>
+                                            <li class="product_mark product_new">جديد</li>
+                                        </ul>
+                                    </div>
+
+                                    
+                                    {%  endfor  %}
+                                </div>
+                                <!-- end : Grid-->
+                            </div>
+                            <div class="tab-pane fade" id="pills-List" role="tabpanel" aria-labelledby="pills-List-tab">
+                                <!--start : List-->
+                                <div class="container">
+
+                                    <div class="row">
+                                        <div class="col-lg-12 mx-auto">
+
+                                        <!-- List group-->
+                                        <ul class="list-group shadow">
+                                            {%  for product in products_list  %}
+                                                <!-- list group item-->
+                                                <li class="list-group-item">
+                                                    <!-- Custom content-->
+                                                    <div class="media align-items-lg-center flex-column flex-lg-row">
+                                                        <div class="media-body order-2 order-lg-1">
+                                                            <h5 class="mt-0 font-weight-bold mb-2">
+                                                                <a href="{% url 'single_view' product.id %}">
+                                                                    <h3>{{product.title}}</h3>
+                                                                </a>
+                                                            </h5>
+                                                            <ul class="list-inline small">
+                                                                {% for i in i|rjust:product.rating %}
+                                                                    <img src="/static/images/star.svg" width="15" alt="⭐">
+                                                                {% endfor %} 
+                                                            </ul>
+                                                            
+                                                            category : {{product.category}} <br>
+                                                            <p class="font-italic text-muted mb-0 small">
+                                                                {{product.summary}} <br>
+                                                            </p>
+                                                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                                                <h6 class="font-weight-bold my-2">
+                                                                    {% if product.discount_price != None %}
+                                                                        <div class="product_price text-success text-rtl"> {{product.discount_price}}  ر.س <br>
+                                                                            <span class="text-danger text-rtl"> {{product.regular_price}}  ر.س </span>
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <div class="product_price text-rtl">{{product.regular_price}}  ر.س </div>
+                                                                    {% endif %}
+                                                                </h6>
+                                                                <p class="text-rtl mb-0">
+                                                                    {% if product.discount_price != None %}
+                                                                        وفر {{product.regular_price|sub:product.discount_price}} ر.س <br>
+                                                                    {% endif %}
+                                                                </p>
+
+                                                                
+                                                                
+                                                                <ul class="list-inline small">
+                                                                    {% if product.free_shipping == True %}
+                                                                        <li class="list-inline-item"> 🚚 شحن مجاني |</li>
+                                                                    {% endif %}
+                                                                    
+                                                                    <li class="list-inline-item">📦 {{product.inventory}} متبقي</li>
+                                                                </ul>
+                                                                
+
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <a href="{% url 'single_view' product.id %}" class="mx-5">
+                                                            <img src="{{product.thumbnail_link}}" alt="Generic placeholder image" width="200" class="order-1 order-lg-2">
+                                                        </a>
+                                                        
+                                                    </div>
+                                                   
+                                                    <!-- Custom content End -->
+                                                </li>
+                                                <!-- End -->
+                                            {%  endfor  %}
+
+
+                                        </ul>
+                                        <!-- End -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--end : List-->
+                            </div>
+                        </div>
+
+						<!-- Shop Page Navigation -->
+
+						<div class="shop_page_nav d-flex flex-row">
+							<div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>
+							<ul class="page_nav d-flex flex-row">
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">...</a></li>
+								<li><a href="#">21</a></li>
+							</ul>
+							<div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+    
+
+    <footer class="footer bg-dark">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-3 footer_col">
+					<div class="footer_column footer_contact">
+						<div class="logo_container">
+							<div class="logo"><a href="#" class=" text-white">جانقو</a></div>
+						</div>
+						<div class="footer_title">الاتحاد السعودي للامن السيبراني و البرمجة و الدرونز</div>
+						<div class="footer_phone"></div>
+						<div class="footer_contact_text">
+							<p></p>
+							<p></p>
+						</div>
+						<div class="footer_social">
+							<ul>
+								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
+								<li><a href="#"><i class="fab fa-google"></i></a></li>
+								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-2 offset-lg-2">
+					<div class="footer_column">
+						<div class="footer_title">قائمة</div>
+						{% comment %} <ul class="footer_list">
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+						</ul>
+						<div class="footer_subtitle">قائمة</div>
+						<ul class="footer_list">
+							<li><a href="#">رابط</a></li>
+						</ul> {% endcomment %}
+					</div>
+				</div>
+
+				<div class="col-lg-2">
+					<div class="footer_column">
+						{% comment %} <ul class="footer_list footer_list_2">
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+						</ul> {% endcomment %}
+					</div>
+				</div>
+
+				<div class="col-lg-2">
+					<div class="footer_column">
+						<div class="footer_title">قائمة</div>
+						{% comment %} <ul class="footer_list">
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+							<li><a href="#">رابط</a></li>
+
+						</ul> {% endcomment %}
+                        <ul>
+                            <a href="{% url 'create_product' %}"> اضف منتج </a>
+                        </ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+
+    <div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					
+					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+						<div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved | crafted with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="twitter.com/3boOodE" target="_blank">@3boOodE</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</div>
+						<div class="logos ml-sm-auto">
+							<ul class="logos_list">
+								<li><a href="#"><img src="images/logos_1.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logos_2.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logos_3.png" alt=""></a></li>
+								<li><a href="#"><img src="images/logos_4.png" alt=""></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock content %}
-
-
-

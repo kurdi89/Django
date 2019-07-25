@@ -1,0 +1,114 @@
+    the list of products in the database : <br> 
+    Grid : <br> 
+    {%  for product in products_list  %}
+        <a href="{% url 'single_view' product.id %}">
+            <img src="{{product.thumbnail_link}}"  width="100">
+        </a>
+        <a href="{% url 'single_view' product.id %}">
+            <h3>{{product.title}}: </h3>
+        </a>
+
+        {{product.summary|truncatechars:120}} <br>
+        category : {{product.category}} <br>
+        regular_price : {{product.regular_price}} <br>
+        {% if product.discount_price != None %}
+        discount_price : {{product.discount_price}} <br>
+        {{product.discount_until|timeuntil}} left for this discount <br>
+        {% endif %}
+        items left : {{product.inventory}} <br>
+        {% if product.free_shipping == True %}
+            Free Shipping Product
+        {% endif %} <br>
+
+        
+        {% for i in i|rjust:product.rating %}
+        ⭐
+        {% endfor %}
+            {% comment %} {{ forloop.counter }}
+            {% ifequal i product.rating %}
+            *
+            {% endifequal %}
+            {% ifnotequal i product.rating %}
+            #
+            {% endifnotequal %} {% endcomment %}
+        {% comment %} {{product.created_at}} <br> {% endcomment %}
+        {% comment %} {{product.author}} <br> {% endcomment %}
+        
+    {%  endfor  %}
+    <hr>
+    List : <br>
+    {%  for product in products_list  %}
+        <a href="{% url 'single_view' product.id %}">
+            <img src="{{product.thumbnail_link}}"  width="100">
+        </a>
+        <a href="{% url 'single_view' product.id %}">
+            <h3>{{product.title}}: </h3>
+        </a>
+
+        {{product.summary}} <br>
+        category : {{product.category}} <br>
+        regular_price : {{product.regular_price}} <br>
+        {% if product.discount_price != None %}
+        discount_price : {{product.discount_price}} <br>
+        {{product.discount_until|timeuntil}} left for this discount <br>
+        {% endif %}
+
+        {% if product.discount_price != None %}
+            you will save : {{product.regular_price|sub:product.discount_price}} <br>
+        {% endif %}
+
+        items left : {{product.inventory}} <br>
+        {% if product.free_shipping == True %}
+            Free Shipping Product
+        {% endif %} <br>
+
+        
+        {% for i in i|rjust:product.rating %}
+        ⭐
+        {% endfor %}
+            {% comment %} {{ forloop.counter }}
+            {% ifequal i product.rating %}
+            *
+            {% endifequal %}
+            {% ifnotequal i product.rating %}
+            #
+            {% endifnotequal %} {% endcomment %}
+        {% comment %} {{product.created_at}} <br> {% endcomment %}
+        {% comment %} {{product.author}} <br> {% endcomment %}
+        
+    {%  endfor  %}
+    <hr>
+    Featured list : 
+    {%  for product in featured_list  %}
+        <a href="{% url 'single_view' product.id %}">
+            <img src="{{product.thumbnail_link}}"  width="100">
+        </a>
+        <a href="{% url 'single_view' product.id %}">
+            <h3>{{product.title}}: </h3>
+        </a>
+
+        {{product.summary|truncatechars:80}} <br>
+        {% comment %} {{product.author}} <br> {% endcomment %}
+        
+    {%  endfor  %}
+    <hr>
+    parent categories : 
+
+    {%  for category in categories %}
+        {% if category.parent == None %}
+            <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+                {% if category.thumbnail %}
+                    <img src="{{category.thumbnail.url}}"  width="100">
+                {% endif %}
+            </a>
+        {% endif %}
+    {%  endfor  %}
+    <hr>
+    sub categories category list : 
+    {%  for category in categories %}
+        {% if category.parent != None %}
+            <a href="/category/{{ category.parent|lower }}/{{ category.slug|lower }}">{{ category.parent  }} / {{ category.name }}</a>
+            </a>
+        {% endif %}
+        {{ category.summary|truncatechars:80 }} <br>
+    {%  endfor  %}

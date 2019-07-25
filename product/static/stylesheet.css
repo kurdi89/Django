@@ -1,4 +1,34 @@
 body {
     background: lightgray;
     color : darkslateblue;
+    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p, small {
+    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Tajawal', sans-serif;
+
+}
+.text-rtl {
+    direction: rtl;
+}
+
+
+.product-discount{
+    width: 42px;
+    height: 35px;
+    border-radius: 22%;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: black;
+    background-color: #fff;
+}
+
+
+.list-group-item{
+    border : 0px;
+    border-bottom: 1px solid rgba(0,0,0,.125) !important; 
+    margin-bottom: 1px;
 }
