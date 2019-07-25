@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+    
+{% block content %}
+
+
+    {{  content  }} <br>
+
+    the list of books in the database : <br> 
+    {%  for book in books_list  %}
+        <a href="{% url 'single_view' book.id %}">
+            <img src="{{book.image_upload.url}}"  width="100">
+        </a>
+        <a href="{% url 'single_view' book.id %}">
+            <h3>{{book.title}}: </h3>
+        </a>
+
+        {{book.summary}} <br>
+        {{book.published_on}} <br>
+        {{book.author}} <br>
+        {{book.pages}} <br>
+        
+    {%  endfor  %}
+
+    <a href="{% url 'create_book' %}"> <h2>Add a Book</h2> </a>
+
+{% endblock content %}
+
+
+

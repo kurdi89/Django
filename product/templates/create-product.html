@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <form method="POST" action="{% url 'media' %}"  enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ create_form.as_p }}
+        <input type="submit" value="Add Book">
+    </form>
+{% endblock content %}
