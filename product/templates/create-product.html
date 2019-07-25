@@ -1,11 +1,25 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
+
+
+
 
 {% block content %}
     {% comment %} action="{% url 'media' %}" {% endcomment %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ create_form.as_p }}
-        <input type="submit" value="Add a product">
-    </form>
+
+    <div class="container">
+        <div class="row p-5">
+            <div class="col-md-6 mx-auto">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ create_form|crispy }}
+                    <input type="submit" class="btn btn-primary btn-block" value="Add a product">
+                </form>
+
+            </div>
+        </div>
+    </div>
 {% endblock content %}
